@@ -228,6 +228,7 @@ bar {
         statusline #ffffff
         background #323232
         inactive_workspace #32323200 #32323200 #5c5c5c
+        focused_workspace #610e0000 #610e00 #ffffff
     }
 }
 
@@ -248,7 +249,7 @@ assign [app_id="keepassxc"] 3
 # Disable windows title
 default_border none
 
-# Set gaps
+# Set borders
 gaps inner 20
 gaps outer 5
 
@@ -257,3 +258,6 @@ seat seat0 xcursor_theme Future-dark-cursors 16
 
 # Set wallpaper
 output * bg ~/.wallpaper.png stretch
+
+# Set poweroff binding
+bindsym $mod+Shift+ctrl+s exec doas /sbin/poweroff

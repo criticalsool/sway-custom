@@ -12,11 +12,11 @@ install_alpine() {
     echo "Installation of sway desktop"
     $CMD setup-desktop sway || exit 1
     echo "Installation of needed packages"
-    $CMD apk add git bash bash-completion mandoc mandoc-apropos docs icu-data-full musl-locales lang || exit 1
+    $CMD apk add git bash bash-completion mandoc mandoc-apropos docs icu-data-full musl-locales lang mako greetd greetd-agreety || exit 1
     echo "Installation of security packages"
     $CMD apk add net-tools ufw audit shadow logrotate || exit 1
     echo "Installation of custom apps packages"
-    $CMD apk add nano htop bat dust fastfetch alacritty font-meslo-nerd greetd greetd-agreety mako keepassxc keepassxc-lang openssh || exit 1
+    $CMD apk add iproute2 drill vim htop bat dust fastfetch alacritty font-meslo-nerd keepassxc keepassxc-lang openssh || exit 1
 }
 
 if [ "$ID" == "alpine" ]; then
@@ -28,6 +28,16 @@ else
     echo "Distribution not found / Unsupported distribution"
     exit 1
 fi
+
+# Add french langage support
+echo 'LANG=fr_FR.UTF-8
+LC_CTYPE=fr_FR.UTF-8
+LC_NUMERIC=fr_FR.UTF-8
+LC_TIME=fr_FR.UTF-8
+LC_COLLATE=fr_FR.UTF-8
+LC_MONETARY=fr_FR.UTF-8
+LC_MESSAGES=fr_FR.UTF-8
+LC_ALL=' | $CMD tee -a /etc/profile.d/99fr.sh
 
 # Configure greetd autologin
 echo '[initial_session]
@@ -51,7 +61,7 @@ export _JAVA_AWT_WM_NONREPARENTING=1
 exec dbus-run-session sway "$@"' | $CMD tee -a /usr/local/bin/sway-run
 
 # Make it executable
-chmod +x /usr/local/bin/sway-run
+$CMD chmod +x /usr/local/bin/sway-run
 
 # Copy alacritty conf
 echo '[window]
@@ -74,9 +84,38 @@ style = "Italic"' > ~/.alacritty.toml
 # Copy config file
 cp config ~/.config/sway
 
+# Copy bashrc
+echo '# Umask
+umask 027
+
+# Aliases
+alias l="ls -lrth"
+alias ll="l -a"
+
+# Prompt
+PS1="(\[\e[33m\]\A\[\e[0m\]) \[\e[32m\]\u\[\e[34m\]@\[\e[35m\]\h \[\e[34m\]\W \[\e[36m\]\$\[\e[0m\] "' > ~/.bashrc
+
+# Copy root bashrc
+echo '# Umask
+umask 027
+
+# Aliases
+alias l="ls -lrth"
+alias ll="l -a"
+
+# Prompt
+PS1="(\[\e[33m\]\A\[\e[0m\]) \[\e[5m\]\[\e[31m\]\u\[\e(B\[\e[m\]\[\e[34m\]@\[\e[35m\]\h \[\e[34m\]\W \[\e[31m\]#\[\e[0m\] "' | $CMD tee -a /root/.bashrc
+
 # Enable firewall
 $CMD ufw enable
 $CMD rc-update add ufw
+
+# Fix permissions
+chmod -R o-rwx ~
+$CMD chmod -R o-rwx /root
+
+# Enable poweroff as wheel without password
+echo 'permit nopass :wheel as root cmd /sbin/poweroff' | $CMD tee -a /etc/doas.d/30-poweroff.conf
 
 # Last print
 echo "Execution success, please reboot for changes to take effect"
