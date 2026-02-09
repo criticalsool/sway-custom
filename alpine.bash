@@ -117,6 +117,22 @@ $CMD chmod -R o-rwx /root
 # Enable poweroff as wheel without password
 echo 'permit nopass :wheel as root cmd /sbin/poweroff' | $CMD tee -a /etc/doas.d/30-poweroff.conf
 
+# Systcl conf
+echo 'net.ipv6.conf.all.disable_ipv6 = 1
+net.ipv6.conf.default.disable_ipv6 = 1' | $CMD tee -a /etc/sysctl.d/no-ipv6.conf
+
+echo 'net.ipv4.ip_forward = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv4.conf.all.secure_redirects = 0
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.conf.default.log_martians = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv4.tcp_syncookies = 1
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0' | $CMD tee -a /etc/sysctl.d/secure.conf
+
 # Last print
 echo "Execution success, please reboot for changes to take effect"
 echo "For the wallpaper, just replace ~/.wallpaper.png"
