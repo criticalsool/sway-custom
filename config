@@ -242,9 +242,11 @@ input type:keyboard xkb_numlock enabled
 #set $ws2 "Internet"
 
 # Assign apps to workspaces
+# To know app_id, run `swaymsg -t get_tree | grep "app_id"`
 assign [app_id="Alacritty"] 1
 assign [app_id="firefox"] 2
-assign [app_id="keepassxc"] 3
+assign [app_id="pcmanfm"] 3
+assign [app_id="keepassxc"] 4
 
 # Disable windows title
 default_border none
