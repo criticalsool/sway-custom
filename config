@@ -1,4 +1,4 @@
-# Default config for sway
+# Criticalsool config for sway
 #
 # Copy this to ~/.config/sway/config and edit it to your liking.
 #
@@ -112,29 +112,52 @@ input type:keyboard {
 #
 # Workspaces:
 #
+    # Define workspaces
+    set $ws1 "Terminal"
+    set $ws2 "Internet"
+    set $ws3 "Fichiers"
+    set $ws4 "Keepass"
+    set $ws5 "5"
+    set $ws6 "6"
+    set $ws7 "7"
+    set $ws8 "8"
+    set $ws9 "9"
+    set $ws10 "10"
+
+    workspace $ws1
+    workspace $ws2
+    workspace $ws3
+    workspace $ws4
+    workspace $ws5
+    workspace $ws6
+    workspace $ws7
+    workspace $ws8
+    workspace $ws9
+    workspace $ws10
+
     # Switch to workspace
-    bindsym $mod+ampersand workspace number 1
-    bindsym $mod+eacute workspace number 2
-    bindsym $mod+quotedbl workspace number 3
-    bindsym $mod+apostrophe workspace number 4
-    bindsym $mod+parenleft workspace number 5
-    bindsym $mod+minus workspace number 6
-    bindsym $mod+egrave workspace number 7
-    bindsym $mod+underscore workspace number 8
-    bindsym $mod+ccedilla workspace number 9
-    bindsym $mod+agrave workspace number 10
+    bindsym $mod+ampersand workspace $ws1
+    bindsym $mod+eacute workspace $ws2
+    bindsym $mod+quotedbl workspace $ws3
+    bindsym $mod+apostrophe workspace $ws4
+    bindsym $mod+parenleft workspace $ws5
+    bindsym $mod+minus workspace $ws6
+    bindsym $mod+egrave workspace $ws7
+    bindsym $mod+underscore workspace $ws8
+    bindsym $mod+ccedilla workspace $ws9
+    bindsym $mod+agrave workspace $ws10
 
     # Move focused container to workspace
-    bindsym $mod+Shift+ampersand move container to workspace number 1
-    bindsym $mod+Shift+eacute move container to workspace number 2
-    bindsym $mod+Shift+quotedbl move container to workspace number 3
-    bindsym $mod+Shift+apostrophe move container to workspace number 4
-    bindsym $mod+Shift+parenleft move container to workspace number 5
-    bindsym $mod+Shift+minus move container to workspace number 6
-    bindsym $mod+Shift+egrave move container to workspace number 7
-    bindsym $mod+Shift+underscore move container to workspace number 8
-    bindsym $mod+Shift+ccedilla move container to workspace number 9
-    bindsym $mod+Shift+agrave move container to workspace number 10
+    bindsym $mod+Shift+ampersand move container to workspace $ws1
+    bindsym $mod+Shift+eacute move container to workspace $ws2
+    bindsym $mod+Shift+quotedbl move container to workspace $ws3
+    bindsym $mod+Shift+apostrophe move container to workspace $ws4
+    bindsym $mod+Shift+parenleft move container to workspace $ws5
+    bindsym $mod+Shift+minus move container to workspace $ws6
+    bindsym $mod+Shift+egrave move container to workspace $ws7
+    bindsym $mod+Shift+underscore move container to workspace $ws8
+    bindsym $mod+Shift+ccedilla move container to workspace $ws9
+    bindsym $mod+Shift+agrave move container to workspace $ws10
 
     # Note: workspaces can have any name you want, not just numbers.
     # We just use 1-10 as the default.
@@ -227,7 +250,7 @@ bar {
     colors {
         statusline #ffffff
         background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        inactive_workspace #32323200 #32323200 #cccccc
         focused_workspace #610e0000 #610e00 #ffffff
     }
 }
@@ -243,10 +266,10 @@ input type:keyboard xkb_numlock enabled
 
 # Assign apps to workspaces
 # To know app_id, run `swaymsg -t get_tree | grep "app_id"`
-assign [app_id="Alacritty"] 1
-assign [app_id="firefox"] 2
-assign [app_id="pcmanfm"] 3
-assign [app_id="keepassxc"] 4
+assign [app_id="Alacritty"] $ws1
+assign [app_id="firefox"] $ws2
+assign [app_id="pcmanfm"] $ws3
+assign [app_id="keepassxc"] $ws4
 
 # Disable windows title
 default_border none
@@ -256,6 +279,8 @@ gaps inner 20
 gaps outer 5
 
 # Set cursor theme and size
+# Cusor theme folder must be in ~/.icons folder
+# Theme name have to be the folder name in ~/.icons
 seat seat0 xcursor_theme Future-dark-cursors 16
 
 # Set wallpaper
@@ -263,3 +288,6 @@ output * bg ~/.wallpaper.png stretch
 
 # Set poweroff binding
 bindsym $mod+Shift+ctrl+s exec doas /sbin/poweroff
+
+# Start app
+exec $term
