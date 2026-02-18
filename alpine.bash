@@ -40,9 +40,9 @@ LC_MESSAGES=fr_FR.UTF-8
 LC_ALL=' | $CMD tee -a /etc/profile.d/99fr.sh
 
 # Configure greetd autologin
-echo '[initial_session]
-command = "/usr/local/bin/sway-run"
-user = "$USER"' | $CMD tee -a /etc/greetd/config.toml
+echo "[initial_session]
+command = '/usr/local/bin/sway-run'
+user = '$USER'" | $CMD tee -a /etc/greetd/config.toml
 
 # Create sway init script
 echo '#! /bin/sh
