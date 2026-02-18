@@ -284,7 +284,7 @@ gaps outer 5
 seat seat0 xcursor_theme Future-dark-cursors 16
 
 # Set wallpaper
-output * bg ~/.wallpaper.png stretch
+output * bg ~/.wallpaper.png fill
 
 # Set poweroff binding
 bindsym $mod+Shift+ctrl+s exec doas /sbin/poweroff
