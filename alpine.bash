@@ -16,7 +16,7 @@ install_alpine() {
     echo "Installation of security packages"
     $CMD apk add net-tools ufw audit shadow logrotate || exit 1
     echo "Installation of custom apps packages"
-    $CMD apk add iproute2 drill vim htop bat dust fastfetch alacritty pcmanfm gvfs font-meslo-nerd keepassxc keepassxc-lang openssh-client || exit 1
+    $CMD apk add iproute2 drill vim htop bat dust fastfetch alacritty pcmanfm gvfs udisks2 font-meslo-nerd keepassxc keepassxc-lang openssh-client || exit 1
 }
 
 if [ "$ID" == "alpine" ]; then
