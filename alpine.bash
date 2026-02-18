@@ -148,8 +148,10 @@ $CMD chmod -R o-rwx /root
 echo 'permit nopass :wheel as root cmd /sbin/poweroff' | $CMD tee -a /etc/doas.d/30-poweroff.conf
 
 # Systcl conf
-echo 'net.ipv6.conf.all.disable_ipv6 = 1
+if [ ! -f /etc/sysctl.d/no-ipv6.conf ]; then
+    echo 'net.ipv6.conf.all.disable_ipv6 = 1
 net.ipv6.conf.default.disable_ipv6 = 1' | $CMD tee -a /etc/sysctl.d/no-ipv6.conf
+fi
 
 echo 'net.ipv4.ip_forward = 0
 net.ipv4.conf.all.accept_source_route = 0
