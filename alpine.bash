@@ -16,7 +16,7 @@ install_alpine() {
     echo "Installation of security packages"
     $CMD apk add net-tools ufw audit shadow logrotate || exit 1
     echo "Installation of custom apps packages"
-    $CMD apk add iproute2 drill vim htop bat dust fastfetch alacritty font-meslo-nerd keepassxc keepassxc-lang openssh || exit 1
+    $CMD apk add iproute2 drill vim htop bat dust fastfetch alacritty pcmanfm gvfs font-meslo-nerd keepassxc keepassxc-lang openssh-client || exit 1
 }
 
 if [ "$ID" == "alpine" ]; then
@@ -82,6 +82,7 @@ family = "MesloLGS Nerd Font Mono"
 style = "Italic"' > ~/.alacritty.toml
 
 # Copy config file
+mkdir -p ~/.config/sway
 cp config ~/.config/sway
 
 # Copy bashrc
@@ -105,6 +106,35 @@ alias ll="l -a"
 
 # Prompt
 PS1="(\[\e[33m\]\A\[\e[0m\]) \[\e[5m\]\[\e[31m\]\u\[\e(B\[\e[m\]\[\e[34m\]@\[\e[35m\]\h \[\e[34m\]\W \[\e[31m\]#\[\e[0m\] "' | $CMD tee -a /root/.bashrc
+
+# Copy pcmanfm conf
+mkdir -p ~/.config/pcmanfm/default
+echo '[config]
+bm_open_method=0
+
+[volume]
+mount_on_startup=0
+mount_removable=0
+autorun=0
+
+[ui]
+always_show_tabs=0
+max_tab_chars=32
+win_width=1870
+win_height=1007
+splitter_pos=150
+media_in_new_tab=0
+desktop_folder_new_win=0
+change_tab_on_drop=1
+close_on_unmount=0
+focus_previous=0
+side_pane_mode=places
+view_mode=icon
+show_hidden=0
+sort=name;ascending;
+toolbar=newtab;navigation;home;
+show_statusbar=1
+pathbar_mode_buttons=0' > ~/.config/pcmanfm/default/pcmanfm.conf
 
 # Enable firewall
 $CMD ufw enable
