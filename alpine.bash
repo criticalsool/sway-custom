@@ -40,7 +40,8 @@ LC_MESSAGES=fr_FR.UTF-8
 LC_ALL=' | $CMD tee -a /etc/profile.d/99fr.sh
 
 # Configure greetd autologin
-echo "[initial_session]
+echo "
+[initial_session]
 command = '/usr/local/bin/sway-run'
 user = '$USER'" | $CMD tee -a /etc/greetd/config.toml
 
@@ -139,6 +140,9 @@ pathbar_mode_buttons=0' > ~/.config/pcmanfm/default/pcmanfm.conf
 # Enable firewall
 $CMD ufw enable
 $CMD rc-update add ufw
+
+# Enable greetd
+$CMD rc-update add greetd
 
 # Fix permissions
 chmod -R o-rwx ~
